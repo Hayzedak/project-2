@@ -85,11 +85,9 @@ then, open a new configuration file using nano editor
 
 This will create a blank file. Paste in the following bare-bones configuration:
 
-
-
-
+```
 #/etc/nginx/sites-available/projectLEMP
-
+ 
 server {
  listen 80;
  server_name projectLEMP www.projectLEMP;
@@ -111,6 +109,7 @@ server {
  }
  
 }
+```
 
 
 When you’re done editing, save and close the file. If you’re using nano, you can do so by typing CTRL+X and then y and ENTER to confirm.
@@ -228,7 +227,25 @@ Now create z PHP script that will connect to mysql and query for your content.
 
 # copy this content into your todo_list.php script:
 
-
+```
+<?php
+$user = "example_user";
+$password = "password";
+$database = "example_database";
+$table = "todo_list";
+ 
+try {
+  $db = new PDO("mysql:host=localhost;dbname=$database", $user, $password);
+  echo "<h2>TODO</h2><ol>";
+  foreach($db->query("SELECT content FROM $table") as $row) {
+ echo "<li>" . $row['content'] . "</li>";
+  }
+  echo "</ol>";
+} catch (PDOException $e) {
+ print "Error!: " . $e->getMessage() . "<br/>";
+ die();
+}
+```
 
 
 
